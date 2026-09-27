@@ -11,6 +11,8 @@ app_port: 7860
 
 # 🍃 SmartDoc AI
 
+**🚀 Live Demo:** [https://smartdoc-ai-1-jors.onrender.com](https://smartdoc-ai-1-jors.onrender.com)
+
 SmartDoc AI is an intelligent, multi-tenant Document Chat Assistant that leverages Retrieval-Augmented Generation (RAG) to allow users to interact with their PDF documents naturally. Powered by FastAPI and cutting-edge open-source LLMs, it offers a secure, isolated environment where each user's data and vector databases are completely sandboxed.
 
 ## ✨ Key Features
