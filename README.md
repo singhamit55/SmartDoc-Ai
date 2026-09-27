@@ -25,7 +25,7 @@ SmartDoc AI is an intelligent, multi-tenant Document Chat Assistant that leverag
 
 - **Backend Architecture:** Python, FastAPI, Uvicorn
 - **AI & Orchestration:** LangChain, Hugging Face Transformers (`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`)
-- **Language Models (LLM):** Groq Cloud API for lightning-fast inference (DeepSeek/Llama-3).
+- **Language Models (LLM):** DeepSeek (via Hugging Face Serverless Inference API).
 - **Vector Database:** ChromaDB (Multi-tenant setup with distinct user collections)
 - **Persistent Storage:** SQLite3 (Chat history), Local File System (Documents)
 - **Frontend UI:** Vanilla HTML5, CSS3 (Custom Glassmorphism Design), JavaScript, FontAwesome 6
@@ -75,7 +75,6 @@ smartdoc-ai/
 3. **Configure Environment Variables:**
    Create a `.env` file in the root directory:
    ```env
-   GROQ_API_KEY=your_groq_api_key_here
    HUGGINGFACEHUB_ACCESS_TOKEN=your_hf_token_here
    ```
 
@@ -89,6 +88,6 @@ smartdoc-ai/
 
 This repository includes a ready-to-deploy `Dockerfile` configured for Hugging Face Spaces.
 1. Create a new **Docker** Space on Hugging Face.
-2. In the Space Settings, add `GROQ_API_KEY` and `HUGGINGFACEHUB_ACCESS_TOKEN` as Secrets.
+2. In the Space Settings, add `HUGGINGFACEHUB_ACCESS_TOKEN` as a Secret.
 3. Update your Google Cloud OAuth credentials to whitelist your new `https://yourusername-spacename.hf.space` URL.
 4. Push this repository to your Space remote!
