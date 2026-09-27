@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartDoc AI - Login</title>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Marked.js for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= LOGIN UI ================= -->
+    <div class="login-page">
+        <div class="login-split-container">
+            <!-- Left Side: Image & Marketing Copy -->
+            <div class="login-left">
+                <div class="login-left-content">
+                    <div class="brand-logo">
+                        <i class="fa-solid fa-leaf" style="background: linear-gradient(135deg, #3b9eff, #1d6fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 22px;"></i>
+                        SmartDoc-AI
+                    </div>
+                    <h1>Chat.<br>Search.<br>Learn.</h1>
+                    <p>Your AI-powered document assistant.</p>
+                </div>
+            </div>
+
+            <!-- Right Side: Login Form -->
+            <div class="login-right">
+                <div class="login-form-container">
+                    <div class="form-logo">
+                        <div class="logo-box" style="background: linear-gradient(135deg, #3b9eff, #1d6fff);">
+                            <i class="fa-solid fa-leaf" style="color: white;"></i>
+                        </div>
+                    </div>
+                    <h2>Welcome Back</h2>
+                    <p class="subtitle">Sign in to continue to SmartDoc-AI</p>
+
+                    <!-- Loading overlay (hidden by default) -->
+                    <div id="loading-spinner" class="hidden">
+                        <i class="fa-solid fa-spinner fa-spin"></i> Authenticating...
+                    </div>
+
+                    <!-- Error message (hidden by default) -->
+                    <div id="error-message" class="error-msg hidden">
+                        Authentication failed. Please try again.
+                    </div>
+
+                    <!-- Official Google Sign-In Button Container -->
+                    <div id="g_id_onload"
+                        data-client_id="188027053452-p1s0ftv4id451ul3b073pjqs7csohp6i.apps.googleusercontent.com"
+                        data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse"
+                        data-auto_prompt="false">
+                    </div>
+
+                    <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="outline"
+                        data-text="continue_with" data-size="large" data-logo_alignment="center"
+                        style="display: flex; justify-content: center; margin-bottom: 12px; width: 100%;">
+                    </div>
+
+
+                    <p class="terms">
+                        By continuing, you agree to our<br>
+                        <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= CHAT APP UI ================= -->
+    <div class="app">
+        <!-- Mobile Sidebar Overlay -->
+        <div id="sidebar-overlay" class="sidebar-overlay" onclick="document.querySelector('.sidebar').classList.remove('mobile-open'); this.classList.remove('mobile-open');"></div>
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-leaf"></i></div>
+                <div>
+                    <div class="logo-title">SmartDoc AI</div>
+                    <div class="logo-subtitle">Your AI Learning Companion</div>
+                </div>
+            </div>
+
+            <button class="new-chat" onclick="newChat()">
+                <i class="fa-solid fa-plus" style="font-size:16px;"></i>
+                <span class="nav-text">New Chat</span>
+            </button>
+
+            <nav class="navigation">
+                <div class="nav-item active" onclick="window.location.href='/'">
+                    <div class="nav-icon"><i class="fa-solid fa-message"></i></div>
+                    <span class="nav-text">Chat</span>
+                </div>
+                <div class="nav-item" onclick="window.location.href='/manage-documents.html'">
+                    <div class="nav-icon"><i class="fa-solid fa-folder-open"></i></div>
+                    <span class="nav-text">Manage Documents</span>
+                </div>
+
+            </nav>
+
+
+
+            <div class="history">
+                <div class="history-header">
+                    <span>Chat History</span>
+                    <span onclick="loadChats()" style="cursor:pointer; font-size: 16px;" title="Refresh"><i class="fa-solid fa-rotate-right"></i></span>
+                </div>
+                <div id="chat-history-list" style="overflow-y:auto; flex:1; min-height:0;">
+                    <!-- Dynamically populated chats go here -->
+                </div>
+            </div>
+
+            <div class="user-area">
+                <div class="avatar">S</div>
+                <div class="user-info">
+                    <div class="user-name">Student</div>
+                    <div class="online"><i class="fa-solid fa-circle" style="font-size: 10px; color: #10b981; margin-right: 4px;"></i>Online Mode</div>
+                </div>
+                <span title="Sign Out" onclick="signOut()" style="cursor:pointer; font-size:16px; color: #64748b;" title="Sign Out"><i class="fa-solid fa-right-from-bracket"></i></span>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="main">
+            <header class="topbar" id="chat-topbar">
+                <button class="mobile-menu-toggle" onclick="document.querySelector('.sidebar').classList.add('mobile-open'); document.getElementById('sidebar-overlay').classList.add('mobile-open');"><i class="fa-solid fa-bars"></i></button>
+                <div class="model-selector" style="margin-left: auto;">
+                    <span class="status-dot"></span>
+                    <span>Hugging Face (DeepSeek)</span>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 4px;"></i>
+                </div>
+            </header>
+
+            <!-- CHAT -->
+            <section class="chat">
+                <div class="chat-inner">
+                    <!-- Welcome -->
+                    <div class="welcome" id="welcome">
+                        <div class="robot"><i class="fa-solid fa-leaf" style="color: var(--primary);"></i></div>
+                        <h1>Welcome to <span class="highlight">SmartDoc AI</span></h1>
+                        <p>Chat with your documents, get summaries, extract insights, and learn faster with AI.</p>
+
+
+                    </div>
+
+                    <!-- Messages -->
+                    <div class="messages" id="messages"></div>
+                </div>
+            </section>
+
+            <!-- INPUT -->
+            <section class="input-section">
+                <div class="input-wrapper">
+                    <button class="attach" onclick="attachFile()" title="Attach document"><i class="fa-solid fa-paperclip"></i></button>
+                    <input id="messageInput" type="text" placeholder="Ask something about your documents..."
+                        autocomplete="off">
+                    <button class="send" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+                <div class="input-help">
+                    Upload documents or ask questions about your files. Supports PDF, DOCX, TXT, XLSX.
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <input type="file" id="fileInput" hidden accept=".pdf,.doc,.docx,.txt,.xls,.xlsx">
+
+    <!-- Modals Removed in favor of full page view -->
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

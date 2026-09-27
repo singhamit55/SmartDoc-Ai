@@ -1,0 +1,29 @@
+# Core LangChain
+langchain
+langchain-community
+langchain-chroma
+langchain-huggingface
+langchain-text-splitters
+langchain-ollama
+
+# Vector store & embeddings
+chromadb
+sentence-transformers
+
+# LLM
+transformers
+torch
+accelerate
+
+# PDF processing
+pypdf
+pymupdf
+
+# Backend & Web
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic-settings
+python-dotenv
+duckduckgo-search
+google-auth
