@@ -37,5 +37,5 @@ RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTr
 # Expose the port HF Spaces expects
 EXPOSE 7860
 
-# Run the FastAPI app on port 7860
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
+# Run the FastAPI app on the port provided by the host (default 7860)
+CMD sh -c "uvicorn main:app --host 0.0.0.0 --port ${PORT:-7860}"
