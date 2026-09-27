@@ -5,10 +5,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 AVAILABLE_MODELS = {
-    "DeepSeek (Hugging Face)": "deepseek-ai/DeepSeek-V4.1-Flash",
+    "Mistral (Hugging Face)": "mistralai/Mistral-7B-Instruct-v0.3",
 }
 
-def get_llm(model="deepseek-ai/DeepSeek-V4.1-Flash"):
+def get_llm(model="mistralai/Mistral-7B-Instruct-v0.3"):
     """
     Returns a ChatHuggingFace instance using the HF Inference API.
     Make sure HUGGINGFACEHUB_ACCESS_TOKEN is set in your .env file.
