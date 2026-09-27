@@ -97,6 +97,19 @@ class ChatResponse(BaseModel):
     response: str
     status: str
 
+def do_web_search(query: str):
+    try:
+        with DDGS() as ddgs:
+            results = list(ddgs.text(query, max_results=3))
+            if not results:
+                return ""
+            formatted = []
+            for r in results:
+                formatted.append(f"Source: {r.get('title')}\n{r.get('body')}")
+            return "\n\n".join(formatted)
+    except Exception:
+        return ""
+
 # API Endpoints
 @app.post("/api/upload")
 async def upload_document(file: UploadFile = File(...), user_id: str = Depends(get_current_user)):
