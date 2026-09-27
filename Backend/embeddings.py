@@ -1,13 +1,16 @@
 import os
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from dotenv import load_dotenv
 
 load_dotenv()
 
 def get_embeddings():
-    """Returns the local HuggingFace embedding model for much faster searching."""
-    
-    return HuggingFaceEmbeddings(
-        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-        # Optionally, you can specify model_kwargs={'device': 'cpu'} 
+    """Returns the HuggingFace embedding model via the Serverless Inference API."""
+    token = os.getenv("HUGGINGFACEHUB_ACCESS_TOKEN")
+    if not token:
+        print("WARNING: HUGGINGFACEHUB_ACCESS_TOKEN is not set in .env!")
+        
+    return HuggingFaceEndpointEmbeddings(
+        model="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        huggingfacehub_api_token=token
     )

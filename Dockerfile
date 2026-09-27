@@ -31,8 +31,7 @@ COPY . .
 # Create persistent data directories
 RUN mkdir -p /app/data/chroma /app/data/docs
 
-# Pre-download the embedding model so cold starts are fast
-RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')"
+# Embeddings are now downloaded via the Hugging Face Serverless API at runtime
 
 # Expose the port HF Spaces expects
 EXPOSE 7860
