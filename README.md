@@ -70,38 +70,3 @@ smartdoc-ai/
 ├── Dockerfile               # Hugging Face Spaces & Container setup
 └── requirements.txt         # Python dependencies
 ```
-
-## 🚀 Setup & Installation (Local)
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/singhamit55/SmartDoc-Ai.git
-   cd SmartDoc-Ai
-   ```
-
-2. **Create a virtual environment & install dependencies:**
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
-
-3. **Configure Environment Variables:**
-   Create a `.env` file in the root directory:
-   ```env
-   HUGGINGFACEHUB_ACCESS_TOKEN=your_hf_token_here
-   ```
-
-4. **Run the Application:**
-   ```bash
-   python -m uvicorn main:app --reload --port 8000
-   ```
-   *Visit `http://localhost:8000` in your browser.*
-
-## ☁️ Deployment (Hugging Face Spaces)
-
-This repository includes a ready-to-deploy `Dockerfile` configured for Hugging Face Spaces.
-1. Create a new **Docker** Space on Hugging Face.
-2. In the Space Settings, add `HUGGINGFACEHUB_ACCESS_TOKEN` as a Secret.
-3. Update your Google Cloud OAuth credentials to whitelist your new `https://yourusername-spacename.hf.space` URL.
-4. Push this repository to your Space remote!
