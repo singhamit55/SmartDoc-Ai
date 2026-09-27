@@ -1,5 +1,5 @@
 import os
-from langchain_huggingface import HuggingFaceEndpointEmbeddings
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -10,7 +10,7 @@ def get_embeddings():
     if not token:
         print("WARNING: HUGGINGFACEHUB_ACCESS_TOKEN is not set in .env!")
         
-    return HuggingFaceEndpointEmbeddings(
-        model="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-        huggingfacehub_api_token=token
+    return HuggingFaceInferenceAPIEmbeddings(
+        api_key=token,
+        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     )
