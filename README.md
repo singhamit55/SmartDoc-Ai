@@ -30,6 +30,20 @@ SmartDoc AI is an intelligent, multi-tenant Document Chat Assistant that leverag
 - **Persistent Storage:** SQLite3 (Chat history), Local File System (Documents)
 - **Frontend UI:** Vanilla HTML5, CSS3 (Custom Glassmorphism Design), JavaScript, FontAwesome 6
 
+## 🗄️ Database Architecture
+
+This system utilizes two entirely different database engines working in tandem, heavily sandboxed per user to enforce multi-tenant security:
+
+### 1. ChromaDB (AI Semantic Memory)
+- **Type:** Vector Database
+- **Role:** When a user uploads a PDF, the text is extracted, chunked, and converted into mathematical embeddings via Hugging Face. ChromaDB stores these high-dimensional vectors. When a user asks a question, ChromaDB executes a **Semantic Similarity Search** to find the exact paragraphs that hold the answer, passing that context to the AI model.
+- **Security:** Vector collections are completely isolated into individual `/data/chroma/{google_user_id}` directories.
+
+### 2. SQLite3 (Application Storage)
+- **Type:** Relational Database
+- **Role:** SQLite is used as a lightweight, zero-configuration local database to persist the standard application data. It securely stores the user's chat logs, session information, and metadata.
+- **Security:** Chat history queries are strictly scoped to the authenticated user's ID to prevent cross-tenant data leakage.
+
 ## 📁 System Architecture & Directory Structure
 
 ```text
@@ -39,7 +53,7 @@ smartdoc-ai/
 │   ├── chunker.py           # Text chunking for optimal RAG context
 │   ├── db.py                # Multi-tenant SQLite database operations
 │   ├── embeddings.py        # Hugging Face embedding generation
-│   ├── llm.py               # Groq LLM integration & prompt engineering
+│   ├── llm.py               # Hugging Face LLM integration & prompt engineering
 │   ├── memory.py            # LangChain conversational memory
 │   ├── pdf_loader.py        # PyPDF2 extraction and OCR setup
 │   ├── retriever.py         # Semantic search and Web Search fallback
