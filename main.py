@@ -147,7 +147,11 @@ async def upload_document(file: UploadFile = File(...), user_id: str = Depends(g
 
 @app.post("/api/chat")
 async def chat(request: ChatRequest, user_id: str = Depends(get_current_user)):
-    qa_chain = get_qa_chain_for_user(user_id)
+    try:
+        qa_chain = get_qa_chain_for_user(user_id)
+    except Exception as e:
+        print(f"Error initializing QA chain: {e}")
+        qa_chain = None
     
     async def generate_response():
         full_answer = ""
