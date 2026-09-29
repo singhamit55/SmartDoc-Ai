@@ -63,6 +63,12 @@
                         data-text="continue_with" data-size="large" data-logo_alignment="center"
                         style="display: flex; justify-content: center; margin-bottom: 12px; width: 100%;">
                     </div>
+                    
+                    <!-- Developer bypass for local testing -->
+                    <button onclick="handleCredentialResponse({credential: 'test-token-bypass'})" 
+                            style="width: 100%; padding: 10px; background: #3b82f6; color: white; border: none; border-radius: 20px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 12px;">
+                        Bypass Login (Local Test)
+                    </button>
 
 
                     <p class="terms">
@@ -135,7 +141,7 @@
                 <button class="mobile-menu-toggle" onclick="document.querySelector('.sidebar').classList.add('mobile-open'); document.getElementById('sidebar-overlay').classList.add('mobile-open');"><i class="fa-solid fa-bars"></i></button>
                 <div class="model-selector" style="margin-left: auto;">
                     <span class="status-dot"></span>
-                    <span>Hugging Face (DeepSeek)</span>
+                    <span>Hugging Face (Qwen 2.5)</span>
                     <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 4px;"></i>
                 </div>
             </header>
