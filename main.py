@@ -72,7 +72,12 @@ async def get_current_user(authorization: str = Header(None)):
     except ValueError:
         raise HTTPException(status_code=401, detail="Invalid Google token")
 
+user_qa_chains = {}
+
 def get_qa_chain_for_user(user_id: str):
+    if user_id in user_qa_chains:
+        return user_qa_chains[user_id]
+        
     user_chroma, _ = get_user_dirs(user_id)
     embeddings = get_embeddings()
     vectorstore = load_vectorstore(embeddings, user_chroma)
@@ -80,12 +85,14 @@ def get_qa_chain_for_user(user_id: str):
         retriever_inst = get_retriever(vectorstore, k=6)
         llm_inst = get_llm()
         prompt, llm_model, retriever_func, format_docs = create_qa_chain(llm_inst, retriever_inst)
-        return {
+        chain = {
             "prompt": prompt,
             "llm": llm_model,
             "retriever": retriever_func,
             "format_docs": format_docs
         }
+        user_qa_chains[user_id] = chain
+        return chain
     return None
 
 # Models
@@ -141,6 +148,10 @@ async def upload_document(file: UploadFile = File(...), user_id: str = Depends(g
         import uuid
         add_document(str(uuid.uuid4()), file.filename)
         
+        # Invalidate QA chain cache so new docs are picked up
+        if user_id in user_qa_chains:
+            del user_qa_chains[user_id]
+            
         return {"message": "Document processed and database updated successfully!"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -268,6 +279,10 @@ async def delete_document(filename: str, user_id: str = Depends(get_current_user
     try:
         embeddings = get_embeddings()
         delete_document_from_vectorstore(file_path, user_chroma, embeddings)
+        
+        # Invalidate QA chain cache
+        if user_id in user_qa_chains:
+            del user_qa_chains[user_id]
     except Exception as e:
         # It's okay if vectorstore deletion fails, the file is gone anyway
         print(f"Vectorstore deletion warning: {e}")
