@@ -11,7 +11,7 @@ app_port: 7860
 
 # 🍃 SmartDoc AI
 
-**🚀 Live Demo:** [https://smartdoc-ai-1-jors.onrender.com](https://smartdoc-ai-1-jors.onrender.com)
+**🚀 Live Demo:** [https://smartdoc-ai-2.onrender.com](https://smartdoc-ai-2.onrender.com)
 
 SmartDoc AI is an intelligent, multi-tenant Document Chat Assistant that leverages Retrieval-Augmented Generation (RAG) to allow users to interact with their PDF documents naturally. Powered by FastAPI and cutting-edge open-source LLMs, it offers a secure, isolated environment where each user's data and vector databases are completely sandboxed.
 
@@ -27,7 +27,7 @@ SmartDoc AI is an intelligent, multi-tenant Document Chat Assistant that leverag
 
 - **Backend Architecture:** Python, FastAPI, Uvicorn
 - **AI & Orchestration:** LangChain, Hugging Face Transformers (`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`)
-- **Language Models (LLM):** DeepSeek (via Hugging Face Serverless Inference API).
+- **Language Models (LLM):** Qwen 2.5 (via Hugging Face Serverless Inference API).
 - **Vector Database:** ChromaDB (Multi-tenant setup with distinct user collections)
 - **Persistent Storage:** SQLite3 (Chat history), Local File System (Documents)
 - **Frontend UI:** Vanilla HTML5, CSS3 (Custom Glassmorphism Design), JavaScript, FontAwesome 6
