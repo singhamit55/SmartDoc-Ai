@@ -5,10 +5,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 AVAILABLE_MODELS = {
-    "Mistral (Hugging Face)": "mistralai/Mistral-7B-Instruct-v0.3",
+    "Zephyr 7B (Hugging Face)": "HuggingFaceH4/zephyr-7b-beta",
 }
 
-def get_llm(model="mistralai/Mistral-7B-Instruct-v0.3"):
+def get_llm(model="HuggingFaceH4/zephyr-7b-beta"):
     """
     Returns a ChatHuggingFace instance using the HF Inference API.
     Make sure HUGGINGFACEHUB_ACCESS_TOKEN is set in your .env file.
